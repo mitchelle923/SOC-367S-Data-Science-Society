@@ -1,0 +1,48 @@
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+**[Lab #0 Markdown File](/assignments/Lab_0.Rmd)**
+
+**[Lab Instructions](https://dssoc.github.io/assignments/lab_instructions.html)**
+
+You can use this example lab file to make sure you can [Knit R Markdown files](https://rmarkdown.rstudio.com/authoring_quick_tour.html) in RStudio. This lab will not be graded, so don't worry about submitting it. Feel free to ask the TA if you are unsure about the submission format.
+
+See the "Instructions" section of the [Introduction to Lab Assignments](https://dssoc.github.io/assignments/lab_instructions.html) page for more information about the labs. That page also gives descriptions for the datasets we will be using.
+
+**Required reading:** 
+
+Any required readings for the labs will be listed here.
+
+**Optional resources:**
+
+Optional readings for the labs will be listed here.
+
+
+## Setup
+
+Every lab will have some code that loads several libraries and the dataset you should use for the lab. If you need to load other libraries to generate your solutions, you can add that code here - I just wrote these to get you started.
+
+```{r message=FALSE, echo=FALSE}
+# Load the datasets and libraries. You shouldn't need to change the URL in the `load` function.
+
+library(tidyverse)
+
+# this will download the dataset from the course website as a dataframe called `congress`.
+load(url('https://dssoc.github.io/datasets/congress.RData'))
+```
+<br/>
+
+
+## Example Questions
+
+<br>
+
+**1. List the names of each column in the `congress` dataset we loaded above.**
+```{r}
+colnames(congress)
+```
+
+<br>
+
+**That's it for this example lab! Most labs are about 10 problems long.**
