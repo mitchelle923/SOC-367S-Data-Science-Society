@@ -85,14 +85,14 @@ congress_contact %>%
 **1. Describe what the following tidyverse functions do. Also describe the pipe operator "%\>%". You may need to look up the [official documentation](https://www.rdocumentation.org/) for each of these.**
 
 ```         
-filter: 
-select: 
-mutate: 
-count: 
-arrange: 
-gather: 
-pivot_longer: 
-pipe operator ("%>%"): 
+filter: used to subset certain rows of a dataset by setting a condition on a column (or "variable")
+select: used to subset the dataset by certain columns
+mutate: used to create a new column (or "variable") from a transformation of other column(s).
+count: used to count the number of occurences of unique types in a column(s).
+arrange: used to order rows of a dataset by column(s), can be ascending or descending.
+gather: used to transform data from wide to long dataframe using key-value pairing
+pivot_longer: used to transform dataframe from wide to long format, variables can be grouped using patterned matching, regular expression, transformations, etc
+pipe operator ("%>%"): used to pass expressions (usually starting with a dataframe) through other expressions for data manipulation
 ```
 
 <br/>
@@ -103,6 +103,8 @@ NOTE: you can identify representators by `type=="rep"` and senators using `type=
 
 ```{r}
 # your answer here
+congress %>% 
+  count(gender,type)
 ```
 
 <br/>
@@ -113,6 +115,13 @@ HINT: check out the `slice()` function.
 
 ```{r}
 # your answer here
+oldest_youngest <- congress %>% 
+  filter(gender=="F",
+         party == "Democrat",
+         type == "sen") %>% 
+  arrange(birthdate) %>% 
+  slice(1, n())
+oldest_youngest
 ```
 
 <br/>
@@ -123,6 +132,14 @@ Note: For this and all future questions this semester, you can approximate age u
 
 ```{r}
 # your answer here
+congress <- congress %>% 
+  mutate(age = 2024 - birthyear)
+
+congress %>% 
+  filter(type == 'sen',
+         party == 'Democrat',
+         age >60) %>% 
+  summarise(n())
 ```
 
 <br/>
@@ -133,6 +150,12 @@ Note: the dataframe should have four rows: number of females over 55, number of 
 
 ```{r}
 # your answer here
+congress <- congress %>% 
+  mutate(more_than_55 = case_when(age > 55 ~ TRUE,
+                                  TRUE ~ FALSE))
+more_than_55_df <- congress %>% 
+  count(gender,more_than_55)
+more_than_55_df
 ```
 
 <br/>
@@ -145,6 +168,21 @@ HINT: the account name will be an empty string in cases where the member of cong
 
 ```{r}
 # your answer here
+sm_gathered <- gather(congress_contact, key = social_media_type, value = account_name, twitter:youtube)
+
+sm_gathered
+
+sm_gathered %>% 
+  filter(account_name != '') %>% 
+  summarise(n())
+
+sm_pivlonger <- pivot_longer(congress_contact, cols = twitter:youtube,names_to = "social_media_type",values_to = "account_name")
+
+sm_pivlonger
+
+sm_pivlonger %>% 
+  filter(account_name != '') %>% 
+  summarise(n())
 ```
 
 <br/>
@@ -163,6 +201,7 @@ require_masks <- c("HI", "WA", "OR", "NV", "CA", "MT", "CO", "NM", "KS", "TX", "
 
 ```{r}
 # your answer here
+intersect(travel_restrictions,require_masks)
 ```
 
 <br/>
@@ -171,10 +210,13 @@ require_masks <- c("HI", "WA", "OR", "NV", "CA", "MT", "CO", "NM", "KS", "TX", "
 
 ```{r}
 # your answer here
+setdiff(require_masks, travel_restrictions)
 ```
 
 **9. Describe two broad topics you might be interested in exploring for your final project. How would you use data science to gain insight about these topics? We won't require you to stick with these topics - we just want to see you brainstorming about what you might be interested in.**
 
 ```         
-your written response here
+1) I am interested in finding a way to quantify the time period and frequency of trending social issues on a specific media platform. I can use data science by accumulating data on recent social issue postings by way of hashtags, visualize the frequency of those hashtags over units of time, and I can do some hypothesis testing on whether there is a statistically significant difference on the time period/frequency of multiple social issues.
+
+2) I am also interested in using geographic data in some way relating transportation. I can use data science by accumulating data of surveys or from city transportation companies, creating mapped visualizations of different transportation modes and other demographic characteristics, and possibly create a regression with predictors (including location) that may be associated with modes of transportation.
 ```
