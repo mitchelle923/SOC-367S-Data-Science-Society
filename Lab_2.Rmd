@@ -1,3 +1,7 @@
+---
+---
+---
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
@@ -170,15 +174,11 @@ HINT: the account name will be an empty string in cases where the member of cong
 # your answer here
 sm_gathered <- gather(congress_contact, key = social_media_type, value = account_name, twitter:youtube)
 
-sm_gathered
-
 sm_gathered %>% 
   filter(account_name != '') %>% 
   summarise(n())
 
 sm_pivlonger <- pivot_longer(congress_contact, cols = twitter:youtube,names_to = "social_media_type",values_to = "account_name")
-
-sm_pivlonger
 
 sm_pivlonger %>% 
   filter(account_name != '') %>% 
