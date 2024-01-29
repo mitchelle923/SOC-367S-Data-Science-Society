@@ -145,7 +145,14 @@ load("/Users/mitchelle/Desktop/Coronavirus_Tweets.Rdata")
 #sets working directory to desktop
 #setwd("~/Users/mitchelle/Desktop")
 
-
+#3rd entry in date column
 covid_tweets$date[3]
+```
+```{r}
+library(shiny)
+
+list.files
+#gets path of current working directory
+getwd()
 ```
 
